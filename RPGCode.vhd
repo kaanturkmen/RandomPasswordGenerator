@@ -27,16 +27,18 @@ entity RPGCode is
 	Port (MCLK : in STD_LOGIC;
 		S : in STD_LOGIC_VECTOR(2 downto 0);
 		B : in STD_LOGIC;
-		X : out STD_LOGIC);
+		X : out STD_LOGIC_VECTOR(3 downto 0));
 end RPGCode;
 
 architecture Behavioral of RPGCode is
 
+signal clockCycleShared : STD_LOGIC_VECTOR(31 downto 0);
+
 begin
 
--- 0 1 2 3 4 5 6 7 8 9 - Numbers
--- A B C D E F Letters
--- . - _ Special Characters
+-- 1 2 3 4 5 6 7 8 - Numbers
+-- A B C D Letters
+-- - _ Special Characters
 
 process(MCLK)
 variable clockCycle : INTEGER range 0 to 50*10**6;
@@ -44,25 +46,30 @@ begin
 	
 	if rising_edge(MCLK) then
 			clockCycle := clockCycle + 1;
+			clockCycleShared <= std_logic_vector(to_unsigned(clockCycle, 32));
 			if(clockCycle = 50*10**6-1) then
 				clockCycle := 0;
+				clockCycleShared <= std_logic_vector(to_unsigned(clockCycle, 32));
 			end if;
 	end if;
 	
 end process;
 
 process(B)
+variable clockCycleLocal : INTEGER range 0 to 50*10**6;
 	begin
+		clockCycleLocal := to_integer(unsigned(clockCycleShared));
+	
 		for I in 0 to 8 loop
 			case S is
 				when "000" =>
-					X <= '0';
+					X <= "0000";
 				when "100" =>
-					X <= clockCycle mod 10;
+					X <= std_logic_vector(to_unsigned(clockCycleLocal mod 8, 4));
 				when "010" =>
-					X <= clockCycle mod 6;
+					X <= std_logic_vector(to_unsigned(clockCycleLocal mod 4, 4));
 				when "001" =>
-					X <= clockCycle mod 3;
+					X <= std_logic_vector(to_unsigned(clockCycleLocal mod 2, 4));
 				when others =>
 					NULL;
 			end case;

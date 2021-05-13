@@ -1,0 +1,466 @@
+Release 14.7 - xst P.20131013 (nt64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.24 secs
+ 
+--> Parameter xsthdpdir set to xst
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.25 secs
+ 
+--> Reading design: RPGCode.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+	9.1) Device utilization summary
+	9.2) Partition Resource Summary
+	9.3) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "RPGCode.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "RPGCode"
+Output Format                      : NGC
+Target Device                      : xc3s50a-5-vq100
+
+---- Source Options
+Top Module Name                    : RPGCode
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+Safe Implementation                : No
+FSM Style                          : LUT
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : Yes
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+ROM Style                          : Auto
+Mux Extraction                     : Yes
+Resource Sharing                   : YES
+Asynchronous To Synchronous        : NO
+Multiplier Style                   : Auto
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 100000
+Add Generic Clock Buffer(BUFG)     : 24
+Register Duplication               : YES
+Slice Packing                      : YES
+Optimize Instantiated Primitives   : NO
+Use Clock Enable                   : Yes
+Use Synchronous Set                : Yes
+Use Synchronous Reset              : Yes
+Pack IO Registers into IOBs        : Auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : No
+Netlist Hierarchy                  : As_Optimized
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Read Cores                         : YES
+Write Timing Constraints           : NO
+Cross Clock Analysis               : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : Maintain
+Slice Utilization Ratio            : 100
+BRAM Utilization Ratio             : 100
+Verilog 2001                       : YES
+Auto BRAM Packing                  : NO
+Slice Utilization Ratio Delta      : 5
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "C:/Users/GlitchedPC/Desktop/ELEC204-Projects/RandomPasswordGenerator/RPGCode.vhd" in Library work.
+Entity <rpgcode> compiled.
+Entity <rpgcode> (Architecture <behavioral>) compiled.
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for entity <RPGCode> in library <work> (architecture <behavioral>) with generics.
+	N = 50000000
+
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing generic Entity <RPGCode> in library <work> (Architecture <behavioral>).
+	N = 50000000
+WARNING:Xst:819 - "C:/Users/GlitchedPC/Desktop/ELEC204-Projects/RandomPasswordGenerator/RPGCode.vhd" line 58: One or more signals are missing in the process sensitivity list. To enable synthesis of FPGA/CPLD hardware, XST will assume that all necessary signals are present in the sensitivity list. Please note that the result of the synthesis may differ from the initial design specification. The missing signals are:
+   <S>
+Entity <RPGCode> analyzed. Unit <RPGCode> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <RPGCode>.
+    Related source file is "C:/Users/GlitchedPC/Desktop/ELEC204-Projects/RandomPasswordGenerator/RPGCode.vhd".
+WARNING:Xst:647 - Input <B> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:646 - Signal <clockCycleShared<31:26>> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:737 - Found 4-bit latch for signal <X>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+    Found 26-bit up counter for signal <clockCycle>.
+    Found 32-bit register for signal <clockCycleShared>.
+    Found 26-bit adder for signal <clockCycleShared$add0001> created at line 48.
+    Summary:
+	inferred   1 Counter(s).
+	inferred  32 D-type flip-flop(s).
+	inferred   1 Adder/Subtractor(s).
+Unit <RPGCode> synthesized.
+
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Adders/Subtractors                                   : 1
+ 26-bit adder                                          : 1
+# Counters                                             : 1
+ 26-bit up counter                                     : 1
+# Registers                                            : 1
+ 32-bit register                                       : 1
+# Latches                                              : 1
+ 4-bit latch                                           : 1
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+WARNING:Xst:1710 - FF/Latch <0> (without init value) has a constant value of 0 in block <3>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:2677 - Node <clockCycleShared_3> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_4> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_5> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_6> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_7> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_8> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_9> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_10> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_11> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_12> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_13> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_14> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_15> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_16> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_17> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_18> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_19> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_20> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_21> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_22> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_23> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_24> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_25> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_26> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_27> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_28> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_29> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_30> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_31> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2404 -  FFs/Latches <clockCycleShared<31:26>> (without init value) have a constant value of 0 in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_3> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_4> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_5> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_6> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_7> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_8> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_9> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_10> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_11> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_12> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_13> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_14> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_15> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_16> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_17> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_18> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_19> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_20> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_21> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_22> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_23> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_24> of sequential type is unconnected in block <RPGCode>.
+WARNING:Xst:2677 - Node <clockCycleShared_25> of sequential type is unconnected in block <RPGCode>.
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# Adders/Subtractors                                   : 1
+ 26-bit adder                                          : 1
+# Counters                                             : 1
+ 26-bit up counter                                     : 1
+# Registers                                            : 3
+ Flip-Flops                                            : 3
+# Latches                                              : 1
+ 4-bit latch                                           : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1710 - FF/Latch <X_3> (without init value) has a constant value of 0 in block <RPGCode>. This FF/Latch will be trimmed during the optimization process.
+
+Optimizing unit <RPGCode> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block RPGCode, actual ratio is 5.
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 29
+ Flip-Flops                                            : 29
+
+=========================================================================
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : RPGCode.ngr
+Top Level Output File Name         : RPGCode
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : No
+
+Design Statistics
+# IOs                              : 9
+
+Cell Usage :
+# BELS                             : 174
+#      GND                         : 1
+#      INV                         : 2
+#      LUT1                        : 50
+#      LUT2                        : 1
+#      LUT3                        : 1
+#      LUT4                        : 9
+#      MUXCY                       : 57
+#      VCC                         : 1
+#      XORCY                       : 52
+# FlipFlops/Latches                : 32
+#      FDR                         : 29
+#      LD                          : 3
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 7
+#      IBUF                        : 3
+#      OBUF                        : 4
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 3s50avq100-5 
+
+ Number of Slices:                       35  out of    704     4%  
+ Number of Slice Flip Flops:             29  out of   1408     2%  
+ Number of 4 input LUTs:                 63  out of   1408     4%  
+ Number of IOs:                           9
+ Number of bonded IOBs:                   8  out of     68    11%  
+    IOB Flip Flops:                       3
+ Number of GCLKs:                         1  out of     24     4%  
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+MCLK                               | BUFGP                  | 29    |
+X_not0001(X_not00011:O)            | NONE(*)(X_0)           | 3     |
+-----------------------------------+------------------------+-------+
+(*) This 1 clock signal(s) are generated by combinatorial logic,
+and XST is not able to identify which are the primary clock signals.
+Please use the CLOCK_SIGNAL constraint to specify the clock signal(s) generated by combinatorial logic.
+INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
+
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -5
+
+   Minimum period: 7.231ns (Maximum Frequency: 138.293MHz)
+   Minimum input arrival time before clock: 2.189ns
+   Maximum output required time after clock: 5.382ns
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'MCLK'
+  Clock period: 7.231ns (frequency: 138.293MHz)
+  Total number of paths / destination ports: 10536 / 58
+-------------------------------------------------------------------------
+Delay:               7.231ns (Levels of Logic = 28)
+  Source:            clockCycle_1 (FF)
+  Destination:       clockCycleShared_0 (FF)
+  Source Clock:      MCLK rising
+  Destination Clock: MCLK rising
+
+  Data Path: clockCycle_1 to clockCycleShared_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDR:C->Q              2   0.495   0.488  clockCycle_1 (clockCycle_1)
+     LUT1:I0->O            1   0.561   0.000  Madd_clockCycleShared_add0001_cy<1>_rt (Madd_clockCycleShared_add0001_cy<1>_rt)
+     MUXCY:S->O            1   0.523   0.000  Madd_clockCycleShared_add0001_cy<1> (Madd_clockCycleShared_add0001_cy<1>)
+     MUXCY:CI->O           1   0.065   0.000  Madd_clockCycleShared_add0001_cy<2> (Madd_clockCycleShared_add0001_cy<2>)
+     MUXCY:CI->O           1   0.065   0.000  Madd_clockCycleShared_add0001_cy<3> (Madd_clockCycleShared_add0001_cy<3>)
+     MUXCY:CI->O           1   0.065   0.000  Madd_clockCycleShared_add0001_cy<4> (Madd_clockCycleShared_add0001_cy<4>)
+     MUXCY:CI->O           1   0.065   0.000  Madd_clockCycleShared_add0001_cy<5> (Madd_clockCycleShared_add0001_cy<5>)
+     MUXCY:CI->O           1   0.065   0.000  Madd_clockCycleShared_add0001_cy<6> (Madd_clockCycleShared_add0001_cy<6>)
+     MUXCY:CI->O           1   0.065   0.000  Madd_clockCycleShared_add0001_cy<7> (Madd_clockCycleShared_add0001_cy<7>)
+     MUXCY:CI->O           1   0.065   0.000  Madd_clockCycleShared_add0001_cy<8> (Madd_clockCycleShared_add0001_cy<8>)
+     MUXCY:CI->O           1   0.065   0.000  Madd_clockCycleShared_add0001_cy<9> (Madd_clockCycleShared_add0001_cy<9>)
+     MUXCY:CI->O           1   0.065   0.000  Madd_clockCycleShared_add0001_cy<10> (Madd_clockCycleShared_add0001_cy<10>)
+     MUXCY:CI->O           1   0.065   0.000  Madd_clockCycleShared_add0001_cy<11> (Madd_clockCycleShared_add0001_cy<11>)
+     MUXCY:CI->O           1   0.065   0.000  Madd_clockCycleShared_add0001_cy<12> (Madd_clockCycleShared_add0001_cy<12>)
+     MUXCY:CI->O           1   0.065   0.000  Madd_clockCycleShared_add0001_cy<13> (Madd_clockCycleShared_add0001_cy<13>)
+     MUXCY:CI->O           1   0.065   0.000  Madd_clockCycleShared_add0001_cy<14> (Madd_clockCycleShared_add0001_cy<14>)
+     MUXCY:CI->O           1   0.065   0.000  Madd_clockCycleShared_add0001_cy<15> (Madd_clockCycleShared_add0001_cy<15>)
+     MUXCY:CI->O           1   0.065   0.000  Madd_clockCycleShared_add0001_cy<16> (Madd_clockCycleShared_add0001_cy<16>)
+     MUXCY:CI->O           1   0.065   0.000  Madd_clockCycleShared_add0001_cy<17> (Madd_clockCycleShared_add0001_cy<17>)
+     MUXCY:CI->O           1   0.065   0.000  Madd_clockCycleShared_add0001_cy<18> (Madd_clockCycleShared_add0001_cy<18>)
+     XORCY:CI->O           1   0.654   0.423  Madd_clockCycleShared_add0001_xor<19> (clockCycleShared_add0001<19>)
+     LUT2:I1->O            1   0.562   0.000  clockCycle_cmp_eq0000_wg_lut<0> (clockCycle_cmp_eq0000_wg_lut<0>)
+     MUXCY:S->O            1   0.523   0.000  clockCycle_cmp_eq0000_wg_cy<0> (clockCycle_cmp_eq0000_wg_cy<0>)
+     MUXCY:CI->O           1   0.065   0.000  clockCycle_cmp_eq0000_wg_cy<1> (clockCycle_cmp_eq0000_wg_cy<1>)
+     MUXCY:CI->O           1   0.065   0.000  clockCycle_cmp_eq0000_wg_cy<2> (clockCycle_cmp_eq0000_wg_cy<2>)
+     MUXCY:CI->O           1   0.065   0.000  clockCycle_cmp_eq0000_wg_cy<3> (clockCycle_cmp_eq0000_wg_cy<3>)
+     MUXCY:CI->O           1   0.065   0.000  clockCycle_cmp_eq0000_wg_cy<4> (clockCycle_cmp_eq0000_wg_cy<4>)
+     MUXCY:CI->O           1   0.065   0.000  clockCycle_cmp_eq0000_wg_cy<5> (clockCycle_cmp_eq0000_wg_cy<5>)
+     MUXCY:CI->O          29   0.065   1.072  clockCycle_cmp_eq0000_wg_cy<6> (clockCycle_cmp_eq0000)
+     FDR:R                     0.435          clockCycleShared_0
+    ----------------------------------------
+    Total                      7.231ns (5.248ns logic, 1.983ns route)
+                                       (72.6% logic, 27.4% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'X_not0001'
+  Total number of paths / destination ports: 9 / 3
+-------------------------------------------------------------------------
+Offset:              2.189ns (Levels of Logic = 2)
+  Source:            S<0> (PAD)
+  Destination:       X_2 (LATCH)
+  Destination Clock: X_not0001 falling
+
+  Data Path: S<0> to X_2
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             4   0.824   0.607  S_0_IBUF (S_0_IBUF)
+     LUT4:I0->O            1   0.561   0.000  X_mux0000<2>1 (X_mux0000<2>)
+     LD:D                      0.197          X_2
+    ----------------------------------------
+    Total                      2.189ns (1.582ns logic, 0.607ns route)
+                                       (72.3% logic, 27.7% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'X_not0001'
+  Total number of paths / destination ports: 3 / 3
+-------------------------------------------------------------------------
+Offset:              5.382ns (Levels of Logic = 1)
+  Source:            X_2 (LATCH)
+  Destination:       X<2> (PAD)
+  Source Clock:      X_not0001 falling
+
+  Data Path: X_2 to X<2>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     LD:G->Q               1   0.629   0.357  X_2 (X_2)
+     OBUF:I->O                 4.396          X_2_OBUF (X<2>)
+    ----------------------------------------
+    Total                      5.382ns (5.025ns logic, 0.357ns route)
+                                       (93.4% logic, 6.6% route)
+
+=========================================================================
+
+
+Total REAL time to Xst completion: 5.00 secs
+Total CPU time to Xst completion: 5.32 secs
+ 
+--> 
+
+Total memory usage is 4513784 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :   59 (   0 filtered)
+Number of infos    :    2 (   0 filtered)
+
