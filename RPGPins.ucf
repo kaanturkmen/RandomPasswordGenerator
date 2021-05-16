@@ -1,0 +1,24 @@
+NET "MCLK" LOC = "P40";
+
+NET "passwordMode(2)" LOC = "P78";
+NET "passwordMode(1)" LOC = "P82";
+NET "passwordMode(0)" LOC = "P85";
+
+NET "BUTTON" LOC = "P36";
+
+NET "SevenSegmentDisplay<0>" LOC = "P64";
+NET "SevenSegmentDisplay<1>" LOC = "P98";
+NET "SevenSegmentDisplay<2>" LOC = "P73";
+NET "SevenSegmentDisplay<3>" LOC = "P72";
+NET "SevenSegmentDisplay<4>" LOC = "P65";
+NET "SevenSegmentDisplay<5>" LOC = "P62";
+NET "SevenSegmentDisplay<6>" LOC = "P71";
+
+NET "SegmentBlock<0>" LOC = "P49"; 
+NET "SegmentBlock<1>" LOC = "P50";
+NET "SegmentBlock<2>" LOC = "P56";
+NET "SegmentBlock<3>" LOC = "P52";
+NET "SegmentBlock<4>" LOC = "P57";
+NET "SegmentBlock<5>" LOC = "P59";
+NET "SegmentBlock<6>" LOC = "P61";
+NET "SegmentBlock<7>" LOC = "P60";
