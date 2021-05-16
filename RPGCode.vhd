@@ -59,10 +59,13 @@ begin
 				clockCycle := 0;
 			end if;
 			
+			if BUTTON = '1' then
+			clkRandom(31 downto 0) <= std_logic_vector(to_unsigned(clockCycle, 32));
+			end if;
+			
 			case passwordMode is
 				when "000" =>
 					RightToLeftLedDisplay(31 downto 0) <= x"00000000";
-					clkRandom(31 downto 0) <= std_logic_vector(to_unsigned(clockCycle, 32));
 				when "100" =>
 					RightToLeftLedDisplay(31 downto 28) <= clkRandom(31 downto 28);
 					RightToLeftLedDisplay(27 downto 24) <= clkRandom(27 downto 24);
