@@ -34,6 +34,7 @@ end RPGCode;
 architecture Behavioral of RPGCode is
 
 signal RightToLeftLedDisplay: STD_LOGIC_VECTOR(31 downto 0);
+signal clkRandom: STD_LOGIC_VECTOR(31 downto 0);
 signal MXSelect: STD_LOGIC_VECTOR(2 downto 0);
 signal DigitToLed: STD_LOGIC_VECTOR(3 downto 0);
 signal aen: STD_LOGIC_VECTOR(7 downto 0);
@@ -61,33 +62,34 @@ begin
 			case passwordMode is
 				when "000" =>
 					RightToLeftLedDisplay(31 downto 0) <= x"00000000";
+					clkRandom(31 downto 0) <= std_logic_vector(to_unsigned(clockCycle, 32));
 				when "100" =>
-					RightToLeftLedDisplay(31 downto 28) <= std_logic_vector(to_unsigned(clockCycle, 4));
-					RightToLeftLedDisplay(27 downto 24) <= std_logic_vector(to_unsigned(clockCycle, 4));
-					RightToLeftLedDisplay(23 downto 20) <= std_logic_vector(to_unsigned(clockCycle, 4));
-					RightToLeftLedDisplay(19 downto 16) <= std_logic_vector(to_unsigned(clockCycle, 4));
-					RightToLeftLedDisplay(15 downto 12) <= std_logic_vector(to_unsigned(clockCycle, 4)); 
-					RightToLeftLedDisplay(11 downto 8) <= std_logic_vector(to_unsigned(clockCycle, 4));
-					RightToLeftLedDisplay(7 downto 4) <= std_logic_vector(to_unsigned(clockCycle, 4));
-					RightToLeftLedDisplay(3 downto 0) <= std_logic_vector(to_unsigned(clockCycle, 4));
+					RightToLeftLedDisplay(31 downto 28) <= clkRandom(31 downto 28);
+					RightToLeftLedDisplay(27 downto 24) <= clkRandom(27 downto 24);
+					RightToLeftLedDisplay(23 downto 20) <= clkRandom(23 downto 20);
+					RightToLeftLedDisplay(19 downto 16) <= clkRandom(19 downto 16);
+					RightToLeftLedDisplay(15 downto 12) <= clkRandom(15 downto 12);
+					RightToLeftLedDisplay(11 downto 8) <= clkRandom(11 downto 8);
+					RightToLeftLedDisplay(7 downto 4) <= clkRandom(7 downto 4);
+					RightToLeftLedDisplay(3 downto 0) <= clkRandom(3 downto 0);
 				when "010" =>
-					RightToLeftLedDisplay(31 downto 28) <= std_logic_vector(to_unsigned(clockCycle, 4));
-					RightToLeftLedDisplay(27 downto 24) <= std_logic_vector(to_unsigned(clockCycle, 4));
-					RightToLeftLedDisplay(23 downto 20) <= std_logic_vector(to_unsigned(clockCycle, 4));
-					RightToLeftLedDisplay(19 downto 16) <= std_logic_vector(to_unsigned(clockCycle, 4));
-					RightToLeftLedDisplay(15 downto 12) <= std_logic_vector(to_unsigned(clockCycle, 4)); 
-					RightToLeftLedDisplay(11 downto 8) <= std_logic_vector(to_unsigned(clockCycle, 4));
-					RightToLeftLedDisplay(7 downto 4) <= std_logic_vector(to_unsigned(clockCycle, 4));
-					RightToLeftLedDisplay(3 downto 0) <= std_logic_vector(to_unsigned(clockCycle, 4));
+					RightToLeftLedDisplay(31 downto 28) <= clkRandom(31 downto 28);
+					RightToLeftLedDisplay(27 downto 24) <= clkRandom(27 downto 24);
+					RightToLeftLedDisplay(23 downto 20) <= clkRandom(23 downto 20);
+					RightToLeftLedDisplay(19 downto 16) <= clkRandom(19 downto 16);
+					RightToLeftLedDisplay(15 downto 12) <= clkRandom(15 downto 12);
+					RightToLeftLedDisplay(11 downto 8) <= clkRandom(11 downto 8);
+					RightToLeftLedDisplay(7 downto 4) <= clkRandom(7 downto 4);
+					RightToLeftLedDisplay(3 downto 0) <= clkRandom(3 downto 0);
 				when "001" =>
-					RightToLeftLedDisplay(31 downto 28) <= std_logic_vector(to_unsigned(clockCycle, 4));
-					RightToLeftLedDisplay(27 downto 24) <= std_logic_vector(to_unsigned(clockCycle, 4));
-					RightToLeftLedDisplay(23 downto 20) <= std_logic_vector(to_unsigned(clockCycle, 4));
-					RightToLeftLedDisplay(19 downto 16) <= std_logic_vector(to_unsigned(clockCycle, 4));
-					RightToLeftLedDisplay(15 downto 12) <= std_logic_vector(to_unsigned(clockCycle, 4)); 
-					RightToLeftLedDisplay(11 downto 8) <= std_logic_vector(to_unsigned(clockCycle, 4));
-					RightToLeftLedDisplay(7 downto 4) <= std_logic_vector(to_unsigned(clockCycle, 4));
-					RightToLeftLedDisplay(3 downto 0) <= std_logic_vector(to_unsigned(clockCycle, 4));
+					RightToLeftLedDisplay(31 downto 28) <= clkRandom(31 downto 28);
+					RightToLeftLedDisplay(27 downto 24) <= clkRandom(27 downto 24);
+					RightToLeftLedDisplay(23 downto 20) <= clkRandom(23 downto 20);
+					RightToLeftLedDisplay(19 downto 16) <= clkRandom(19 downto 16);
+					RightToLeftLedDisplay(15 downto 12) <= clkRandom(15 downto 12);
+					RightToLeftLedDisplay(11 downto 8) <= clkRandom(11 downto 8);
+					RightToLeftLedDisplay(7 downto 4) <= clkRandom(7 downto 4);
+					RightToLeftLedDisplay(3 downto 0) <= clkRandom(3 downto 0);
 				when others =>
 					NULL;
 			end case;
