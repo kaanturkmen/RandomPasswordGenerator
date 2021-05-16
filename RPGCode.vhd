@@ -51,40 +51,40 @@ aen <= "11111111";
 
 process(MCLK)
 variable clockCycle : INTEGER range 0 to 50*10**6;
+variable maxCycle1 : INTEGER range 0 to 1073741823;
+variable maxCycle2 : INTEGER range 1073741823 to 2147483646;
 begin
 	
 	if rising_edge(MCLK) then
 			clockCycle := clockCycle + 1;
+			maxCycle1 := maxCycle1 +1;
+			maxCycle2 := maxCycle2 +1;
 			if(clockCycle = 50*10**6-1) then
 				clockCycle := 0;
 			end if;
 			
+			if(maxCycle1 = 1073741823-1) then
+				maxCycle1 := 0;
+			end if;
+			if(maxCycle2 = 2147483646-1) then
+				maxCycle2 := 1073741823;
+			end if;
+			
 			if BUTTON = '1' then
-			clkRandom(31 downto 0) <= std_logic_vector(to_unsigned(clockCycle, 32));
+			clkRandom(31 downto 16) <= std_logic_vector(to_unsigned(maxCycle1, 16));
+			clkRandom(15 downto 0) <= std_logic_vector(to_unsigned(maxCycle2, 16));
 			end if;
 			
 			case passwordMode is
 				when "000" =>
-					RightToLeftLedDisplay(31 downto 0) <= x"00000000";
+					RightToLeftLedDisplay <= x"00000000";
 				when "100" =>
-					RightToLeftLedDisplay(31 downto 28) <= clkRandom(31 downto 28);
-					RightToLeftLedDisplay(27 downto 24) <= clkRandom(27 downto 24);
-					RightToLeftLedDisplay(23 downto 20) <= clkRandom(23 downto 20);
-					RightToLeftLedDisplay(19 downto 16) <= clkRandom(19 downto 16);
-					RightToLeftLedDisplay(15 downto 12) <= clkRandom(15 downto 12);
-					RightToLeftLedDisplay(11 downto 8) <= clkRandom(11 downto 8);
-					RightToLeftLedDisplay(7 downto 4) <= clkRandom(7 downto 4);
-					RightToLeftLedDisplay(3 downto 0) <= clkRandom(3 downto 0);
+					RightToLeftLedDisplay <= x"00000000";
 				when "010" =>
-					RightToLeftLedDisplay(31 downto 28) <= clkRandom(31 downto 28);
-					RightToLeftLedDisplay(27 downto 24) <= clkRandom(27 downto 24);
-					RightToLeftLedDisplay(23 downto 20) <= clkRandom(23 downto 20);
-					RightToLeftLedDisplay(19 downto 16) <= clkRandom(19 downto 16);
-					RightToLeftLedDisplay(15 downto 12) <= clkRandom(15 downto 12);
-					RightToLeftLedDisplay(11 downto 8) <= clkRandom(11 downto 8);
-					RightToLeftLedDisplay(7 downto 4) <= clkRandom(7 downto 4);
-					RightToLeftLedDisplay(3 downto 0) <= clkRandom(3 downto 0);
+					RightToLeftLedDisplay <= x"00000000";
 				when "001" =>
+					RightToLeftLedDisplay <= x"00000000";
+				when "110" =>
 					RightToLeftLedDisplay(31 downto 28) <= clkRandom(31 downto 28);
 					RightToLeftLedDisplay(27 downto 24) <= clkRandom(27 downto 24);
 					RightToLeftLedDisplay(23 downto 20) <= clkRandom(23 downto 20);
