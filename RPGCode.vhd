@@ -40,6 +40,9 @@ signal DigitToLed: STD_LOGIC_VECTOR(3 downto 0);
 signal aen: STD_LOGIC_VECTOR(7 downto 0);
 signal DividedClock: STD_LOGIC_VECTOR(25 downto 0);
 
+type vectorArray is array (0 to 9) of std_logic_vector(3 downto 0);
+signal onlyNumeric: vectorArray;
+
 begin
 
 -- 1 2 3 4 5 6 7 8 - Numbers
@@ -49,16 +52,35 @@ begin
 MXSelect <= DividedClock(19 downto 17);
 aen <= "11111111";
 
+
+onlyNumeric(0) <= "0000";
+onlyNumeric(1) <= "0001";
+onlyNumeric(2) <= "0010";
+onlyNumeric(3) <= "0011";
+onlyNumeric(4) <= "0100";
+onlyNumeric(5) <= "0101";
+onlyNumeric(6) <= "0110";
+onlyNumeric(7) <= "0111";
+onlyNumeric(8) <= "1000";
+onlyNumeric(9) <= "1000";
+
 process(MCLK)
 variable clockCycle : INTEGER range 0 to 50*10**6;
 variable maxCycle1 : INTEGER range 0 to 1073741823;
 variable maxCycle2 : INTEGER range 1073741823 to 2147483646;
+
+variable onlyNumericCounter : INTEGER range 0 to 173741823;
+
+variable onlyNumericCounterSaved : INTEGER range 0 to 1073741823;
+
 begin
 	
 	if rising_edge(MCLK) then
 			clockCycle := clockCycle + 1;
-			maxCycle1 := maxCycle1 +1;
-			maxCycle2 := maxCycle2 +1;
+			maxCycle1 := maxCycle1 + 1;
+			maxCycle2 := maxCycle2 + 1;
+			onlyNumericCounter := onlyNumericCounter + 1;
+			
 			if(clockCycle = 50*10**6-1) then
 				clockCycle := 0;
 			end if;
@@ -70,16 +92,28 @@ begin
 				maxCycle2 := 1073741823;
 			end if;
 			
+			if(onlyNumericCounter = 173741823-1) then
+				onlyNumericCounter := 0;
+			end if;
+			
 			if BUTTON = '1' then
 			clkRandom(31 downto 16) <= std_logic_vector(to_unsigned(maxCycle1, 16));
 			clkRandom(15 downto 0) <= std_logic_vector(to_unsigned(maxCycle2, 16));
+			onlyNumericCounterSaved := onlyNumericCounter;
 			end if;
 			
 			case passwordMode is
 				when "000" =>
 					RightToLeftLedDisplay <= x"00000000";
 				when "100" =>
-					RightToLeftLedDisplay <= x"00000000";
+					RightToLeftLedDisplay(31 downto 28) <= onlyNumeric((onlyNumericCounterSaved / 10) mod 10);
+					RightToLeftLedDisplay(27 downto 24) <= onlyNumeric((onlyNumericCounterSaved / 100) mod 10);
+					RightToLeftLedDisplay(23 downto 20) <= onlyNumeric((onlyNumericCounterSaved / 1000) mod 10);
+					RightToLeftLedDisplay(19 downto 16) <= onlyNumeric((onlyNumericCounterSaved / 10000) mod 10);
+					RightToLeftLedDisplay(15 downto 12) <= onlyNumeric((onlyNumericCounterSaved / 100000) mod 10);
+					RightToLeftLedDisplay(11 downto 8) <= onlyNumeric((onlyNumericCounterSaved / 1000000) mod 10);
+					RightToLeftLedDisplay(7 downto 4) <= onlyNumeric((onlyNumericCounterSaved / 10000000) mod 10);
+					RightToLeftLedDisplay(3 downto 0) <= onlyNumeric((onlyNumericCounterSaved / 100000000) mod 10);
 				when "010" =>
 					RightToLeftLedDisplay <= x"00000000";
 				when "001" =>
