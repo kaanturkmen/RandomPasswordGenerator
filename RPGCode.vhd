@@ -40,10 +40,10 @@ signal DigitToLed: STD_LOGIC_VECTOR(3 downto 0);
 signal aen: STD_LOGIC_VECTOR(7 downto 0);
 signal DividedClock: STD_LOGIC_VECTOR(25 downto 0);
 
-type vectorArrayNumeric is array (0 to 9) of std_logic_vector(3 downto 0);
+type vectorArrayNumeric is array (0 to 31) of std_logic_vector(3 downto 0);
 signal onlyNumeric: vectorArrayNumeric;
 
-type vectorArrayLetters is array (0 to 5) of std_logic_vector(3 downto 0);
+type vectorArrayLetters is array (0 to 31) of std_logic_vector(3 downto 0);
 signal onlyLetters: vectorArrayLetters;
 
 begin
@@ -65,7 +65,29 @@ onlyNumeric(5) <= "0101";
 onlyNumeric(6) <= "0110";
 onlyNumeric(7) <= "0111";
 onlyNumeric(8) <= "1000";
-onlyNumeric(9) <= "1000";
+onlyNumeric(9) <= "1001";
+onlyNumeric(10) <= "0000";
+onlyNumeric(11) <= "0001";
+onlyNumeric(12) <= "0010";
+onlyNumeric(13) <= "0011";
+onlyNumeric(14) <= "0100";
+onlyNumeric(15) <= "0101";
+onlyNumeric(16) <= "0110";
+onlyNumeric(17) <= "0111";
+onlyNumeric(18) <= "1000";
+onlyNumeric(19) <= "1001";
+onlyNumeric(20) <= "0000";
+onlyNumeric(21) <= "0001";
+onlyNumeric(22) <= "0010";
+onlyNumeric(23) <= "0011";
+onlyNumeric(24) <= "0100";
+onlyNumeric(25) <= "0101";
+onlyNumeric(26) <= "0110";
+onlyNumeric(27) <= "0111";
+onlyNumeric(28) <= "1000";
+onlyNumeric(29) <= "1001";
+onlyNumeric(30) <= "1001";
+onlyNumeric(31) <= "0111";
 
 onlyLetters(0) <= "1010";
 onlyLetters(1) <= "1011";
@@ -73,6 +95,32 @@ onlyLetters(2) <= "1100";
 onlyLetters(3) <= "1101";
 onlyLetters(4) <= "1110";
 onlyLetters(5) <= "1111";
+onlyLetters(6) <= "1010";
+onlyLetters(7) <= "1011";
+onlyLetters(8) <= "1100";
+onlyLetters(9) <= "1101";
+onlyLetters(10) <= "1110";
+onlyLetters(11) <= "1111";
+onlyLetters(12) <= "1010";
+onlyLetters(13) <= "1011";
+onlyLetters(14) <= "1100";
+onlyLetters(15) <= "1101";
+onlyLetters(16) <= "1110";
+onlyLetters(17) <= "1111";
+onlyLetters(18) <= "1010";
+onlyLetters(19) <= "1011";
+onlyLetters(20) <= "1100";
+onlyLetters(21) <= "1101";
+onlyLetters(22) <= "1110";
+onlyLetters(23) <= "1111";
+onlyLetters(24) <= "1010";
+onlyLetters(25) <= "1011";
+onlyLetters(26) <= "1100";
+onlyLetters(27) <= "1101";
+onlyLetters(28) <= "1110";
+onlyLetters(29) <= "1111";
+onlyLetters(30) <= "1111";
+onlyLetters(31) <= "1110";
 
 process(MCLK)
 variable clockCycle : INTEGER range 0 to 50*10**6;
@@ -86,6 +134,7 @@ variable onlyLetterCounter : INTEGER range 0 to 173741823;
 variable onlyLetterCounterSaved : INTEGER range 0 to 1073741823;
 
 begin
+
 	if rising_edge(MCLK) then
 			clockCycle := clockCycle + 1;
 			maxCycle1 := maxCycle1 + 1;
@@ -123,23 +172,23 @@ begin
 				when "000" =>
 					RightToLeftLedDisplay <= x"00000000";
 				when "100" =>
-					RightToLeftLedDisplay(31 downto 28) <= onlyNumeric((onlyNumericCounterSaved / 2) mod 256);
-					RightToLeftLedDisplay(27 downto 24) <= onlyNumeric((onlyNumericCounterSaved / 4) mod 256);
-					RightToLeftLedDisplay(23 downto 20) <= onlyNumeric((onlyNumericCounterSaved / 8) mod 256);
-					RightToLeftLedDisplay(19 downto 16) <= onlyNumeric((onlyNumericCounterSaved / 16) mod 256);
-					RightToLeftLedDisplay(15 downto 12) <= onlyNumeric((onlyNumericCounterSaved / 32) mod 256);
-					RightToLeftLedDisplay(11 downto 8) <= onlyNumeric((onlyNumericCounterSaved / 64) mod 256);
-					RightToLeftLedDisplay(7 downto 4) <= onlyNumeric((onlyNumericCounterSaved / 128) mod 256);
-					RightToLeftLedDisplay(3 downto 0) <= onlyNumeric((onlyNumericCounterSaved / 256) mod 256);
+					RightToLeftLedDisplay(31 downto 28) <= onlyNumeric((onlyNumericCounterSaved / 2) mod 32);
+					RightToLeftLedDisplay(27 downto 24) <= onlyNumeric((onlyNumericCounterSaved / 4) mod 32);
+					RightToLeftLedDisplay(23 downto 20) <= onlyNumeric((onlyNumericCounterSaved / 8) mod 32);
+					RightToLeftLedDisplay(19 downto 16) <= onlyNumeric((onlyNumericCounterSaved / 16) mod 32);
+					RightToLeftLedDisplay(15 downto 12) <= onlyNumeric((onlyNumericCounterSaved / 32) mod 32);
+					RightToLeftLedDisplay(11 downto 8) <= onlyNumeric((onlyNumericCounterSaved / 64) mod 32);
+					RightToLeftLedDisplay(7 downto 4) <= onlyNumeric((onlyNumericCounterSaved / 128) mod 32);
+					RightToLeftLedDisplay(3 downto 0) <= onlyNumeric((onlyNumericCounterSaved / 256) mod 32);
 				when "010" =>
-					RightToLeftLedDisplay(31 downto 28) <= onlyLetters((onlyNumericCounterSaved / 2) mod 256);
-					RightToLeftLedDisplay(27 downto 24) <= onlyLetters((onlyNumericCounterSaved / 4) mod 256);
-					RightToLeftLedDisplay(23 downto 20) <= onlyLetters((onlyNumericCounterSaved / 8) mod 256);
-					RightToLeftLedDisplay(19 downto 16) <= onlyLetters((onlyNumericCounterSaved / 16) mod 256);
-					RightToLeftLedDisplay(15 downto 12) <= onlyLetters((onlyNumericCounterSaved / 32) mod 256);
-					RightToLeftLedDisplay(11 downto 8) <= onlyLetters((onlyNumericCounterSaved / 64) mod 256);
-					RightToLeftLedDisplay(7 downto 4) <= onlyLetters((onlyNumericCounterSaved / 128) mod 256);
-					RightToLeftLedDisplay(3 downto 0) <= onlyLetters((onlyNumericCounterSaved / 256) mod 256);
+					RightToLeftLedDisplay(31 downto 28) <= onlyLetters((onlyNumericCounterSaved / 2) mod 32);
+					RightToLeftLedDisplay(27 downto 24) <= onlyLetters((onlyNumericCounterSaved / 4) mod 32);
+					RightToLeftLedDisplay(23 downto 20) <= onlyLetters((onlyNumericCounterSaved / 8) mod 32);
+					RightToLeftLedDisplay(19 downto 16) <= onlyLetters((onlyNumericCounterSaved / 16) mod 32);
+					RightToLeftLedDisplay(15 downto 12) <= onlyLetters((onlyNumericCounterSaved / 32) mod 32);
+					RightToLeftLedDisplay(11 downto 8) <= onlyLetters((onlyNumericCounterSaved / 64) mod 32);
+					RightToLeftLedDisplay(7 downto 4) <= onlyLetters((onlyNumericCounterSaved / 128) mod 32);
+					RightToLeftLedDisplay(3 downto 0) <= onlyLetters((onlyNumericCounterSaved / 256) mod 32);
 				when "001" =>
 					RightToLeftLedDisplay <= x"00000000";
 				when "110" =>
