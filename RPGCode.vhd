@@ -77,7 +77,7 @@ onlyLetters(5) <= "1111";
 process(MCLK)
 variable clockCycle : INTEGER range 0 to 50*10**6;
 variable maxCycle1 : INTEGER range 0 to 1073741823;
-variable maxCycle2 : INTEGER range 1073741823 to 2147483646;
+variable maxCycle2 : INTEGER range 2147483646 downto 1073741823;
 
 variable onlyNumericCounter : INTEGER range 0 to 173741823;
 variable onlyNumericCounterSaved : INTEGER range 0 to 1073741823;
@@ -85,13 +85,11 @@ variable onlyNumericCounterSaved : INTEGER range 0 to 1073741823;
 variable onlyLetterCounter : INTEGER range 0 to 173741823;
 variable onlyLetterCounterSaved : INTEGER range 0 to 1073741823;
 
-
 begin
-	
 	if rising_edge(MCLK) then
 			clockCycle := clockCycle + 1;
 			maxCycle1 := maxCycle1 + 1;
-			maxCycle2 := maxCycle2 + 1;
+			maxCycle2 := maxCycle2 - 1;
 			onlyNumericCounter := onlyNumericCounter + 1;
 			onlyLetterCounter := onlyLetterCounter + 1;
 			
@@ -102,8 +100,8 @@ begin
 			if(maxCycle1 = 1073741823-1) then
 				maxCycle1 := 0;
 			end if;
-			if(maxCycle2 = 2147483646-1) then
-				maxCycle2 := 1073741823;
+			if(maxCycle2 = 1073741823) then
+				maxCycle2 := 2147483646;
 			end if;
 			
 			if(onlyNumericCounter = 173741823-1) then
