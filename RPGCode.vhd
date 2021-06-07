@@ -1,6 +1,6 @@
 ----------------------------------------------------------------------------------
--- University: Koç University
--- Students: Kaan Türkmen - Can Usluel
+-- University: Koc University
+-- Students: Kaan Turkmen - Can Usluel
 -- 
 -- Create Date:    12:45:10 05/13/2021 
 -- Design Name: FPGA Design
@@ -40,6 +40,9 @@ signal DigitToLed: STD_LOGIC_VECTOR(3 downto 0);
 signal aen: STD_LOGIC_VECTOR(7 downto 0);
 signal DividedClock: STD_LOGIC_VECTOR(25 downto 0);
 
+-- Two arrays are defined to store required numbers / characters.
+-- They will be used to get random element using indexing.
+
 type vectorArrayNumeric is array (0 to 31) of std_logic_vector(3 downto 0);
 signal onlyNumeric: vectorArrayNumeric;
 
@@ -48,13 +51,20 @@ signal onlyLetters: vectorArrayLetters;
 
 begin
 
--- 1 2 3 4 5 6 7 8 - Numbers
--- A B C D Letters
--- - _ Special Characters
-
+-- We have defined FPS of the display using parsing (We did not use specific FPS rate).
 MXSelect <= DividedClock(19 downto 17);
+
+-- Setting all segments closed at the first place.
 aen <= "11111111";
 
+-- ** The reason there is more indexing than the number counts. ** --
+
+-- Since VHDL can divide non-constant variables only with 2's powers,
+-- we have defined 32 numeric values which increases 2 number's selection chance.
+-- this increse can be reduced proportionaly if we increase the number of definitions
+-- for example, if we define 1024 numeric values, the chance would be reduced 103/1024 instead of 4/32 for only numeric  
+
+-- Filling onlyNumeric array indices with the numbers.
 
 onlyNumeric(0) <= "0000";
 onlyNumeric(1) <= "0001";
@@ -88,6 +98,8 @@ onlyNumeric(28) <= "1000";
 onlyNumeric(29) <= "1001";
 onlyNumeric(30) <= "1001";
 onlyNumeric(31) <= "0111";
+
+-- Filling onlyLetters array indices with the letters.
 
 onlyLetters(0) <= "1010";
 onlyLetters(1) <= "1011";
@@ -123,9 +135,19 @@ onlyLetters(30) <= "1111";
 onlyLetters(31) <= "1110";
 
 process(MCLK)
-variable clockCycle : INTEGER range 0 to 50*10**6;
+
+-- Algorithm uses clock ticks to determine the random index.
+-- The reason why we have two different cycles (maxCycle1 and maxCycle2) is 
+-- using one cycle will not be a random, since going most significant bit
+-- is not changing as fast as the least significant bit, we will be produce
+-- close numbers on each press. Thats why we are using two cycles and their
+-- least significant bits.
+
 variable maxCycle1 : INTEGER range 0 to 1073741823;
 variable maxCycle2 : INTEGER range 2147483646 downto 1073741823;
+
+-- Counter itself changes overtime, saved versions will freeze when user presses the button.
+-- It is done to freeze the seen output as the same until the button is pressed again.
 
 variable onlyNumericCounter : INTEGER range 0 to 173741823;
 variable onlyNumericCounterSaved : INTEGER range 0 to 1073741823;
@@ -136,15 +158,10 @@ variable onlyLetterCounterSaved : INTEGER range 0 to 1073741823;
 begin
 
 	if rising_edge(MCLK) then
-			clockCycle := clockCycle + 1;
 			maxCycle1 := maxCycle1 + 1;
 			maxCycle2 := maxCycle2 - 1;
 			onlyNumericCounter := onlyNumericCounter + 1;
 			onlyLetterCounter := onlyLetterCounter + 1;
-			
-			if(clockCycle = 50*10**6-1) then
-				clockCycle := 0;
-			end if;
 			
 			if(maxCycle1 = 1073741823-1) then
 				maxCycle1 := 0;
@@ -162,6 +179,10 @@ begin
 			end if;
 			
 			if BUTTON = '1' then
+
+      -- When user wants to produce number & letters combined, we do not need to use
+      -- indexing to the arrays, thus we can use random numbers. That is why clkRandom is being used.
+
 			clkRandom(31 downto 16) <= std_logic_vector(to_unsigned(maxCycle1, 16));
 			clkRandom(15 downto 0) <= std_logic_vector(to_unsigned(maxCycle2, 16));
 			onlyNumericCounterSaved := onlyNumericCounter;
@@ -170,8 +191,18 @@ begin
 			
 			case passwordMode is
 				when "000" =>
+
+          -- If none of the switches are active, showing 0 on the screen.
+
 					RightToLeftLedDisplay <= x"00000000";
 				when "100" =>
+
+          -- If the first switch is activated, we are producing number between 0 to 32, than accessing
+          -- to the array to get a random number.
+
+          -- We used dividing before modding is that, we do not want to all indexes to be same.
+          -- That would happen because counter saved is freezed in time.
+
 					RightToLeftLedDisplay(31 downto 28) <= onlyNumeric((onlyNumericCounterSaved / 2) mod 32);
 					RightToLeftLedDisplay(27 downto 24) <= onlyNumeric((onlyNumericCounterSaved / 4) mod 32);
 					RightToLeftLedDisplay(23 downto 20) <= onlyNumeric((onlyNumericCounterSaved / 8) mod 32);
@@ -181,6 +212,13 @@ begin
 					RightToLeftLedDisplay(7 downto 4) <= onlyNumeric((onlyNumericCounterSaved / 128) mod 32);
 					RightToLeftLedDisplay(3 downto 0) <= onlyNumeric((onlyNumericCounterSaved / 256) mod 32);
 				when "010" =>
+
+          -- If the second switch is activated, we are producing number between 0 to 32, than accessing
+          -- to the array to get a random letter.
+
+          -- We used dividing before modding is that, we do not want to all indexes to be same.
+          -- That would happen because counter saved is freezed in time.
+
 					RightToLeftLedDisplay(31 downto 28) <= onlyLetters((onlyNumericCounterSaved / 2) mod 32);
 					RightToLeftLedDisplay(27 downto 24) <= onlyLetters((onlyNumericCounterSaved / 4) mod 32);
 					RightToLeftLedDisplay(23 downto 20) <= onlyLetters((onlyNumericCounterSaved / 8) mod 32);
@@ -189,9 +227,10 @@ begin
 					RightToLeftLedDisplay(11 downto 8) <= onlyLetters((onlyNumericCounterSaved / 64) mod 32);
 					RightToLeftLedDisplay(7 downto 4) <= onlyLetters((onlyNumericCounterSaved / 128) mod 32);
 					RightToLeftLedDisplay(3 downto 0) <= onlyLetters((onlyNumericCounterSaved / 256) mod 32);
-				when "001" =>
-					RightToLeftLedDisplay <= x"00000000";
 				when "110" =>
+        
+          -- If both switches are active, we can use random bits since we do not need mapping to the array,
+        
 					RightToLeftLedDisplay(31 downto 28) <= clkRandom(31 downto 28);
 					RightToLeftLedDisplay(27 downto 24) <= clkRandom(27 downto 24);
 					RightToLeftLedDisplay(23 downto 20) <= clkRandom(23 downto 20);
@@ -211,6 +250,7 @@ end process;
 process(DigitToLed)
 	begin
 		case DigitToLed is
+    
 			when "0000" => SevenSegmentDisplay <= "0000001"; -- 0
 			when "0001" => SevenSegmentDisplay <= "1001111"; -- 1
 			when "0010" => SevenSegmentDisplay <= "0010010"; -- 2
